@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Cart - Order Food Online | Foodie</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">
+                    <i class="fas fa-utensils"></i>
+                    Foodie
+                </a>
+                
+                <div class="location-selector d-none d-lg-flex">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="location-text">Koramangala, Bangalore</span>
+                    <i class="fas fa-chevron-down" style="font-size: 12px;"></i>
+                </div>
+                
+                <div class="nav-actions">
+                    <button class="nav-btn login" onclick="auth.openModal('login')">Login</button>
+                    <button class="nav-btn signup" onclick="auth.openModal('signup')">Sign Up</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav class="mobile-nav">
+        <a href="index.html" class="mobile-nav-item">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="restaurants.html" class="mobile-nav-item">
+            <i class="fas fa-utensils"></i>
+            <span>Food</span>
+        </a>
+        <a href="cart.html" class="mobile-nav-item active">
+            <i class="fas fa-shopping-cart"></i>
+            <span>Cart</span>
+        </a>
+        <a href="profile.html" class="mobile-nav-item">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+        </a>
+    </nav>
+
+    <!-- Cart Page -->
+    <section class="cart-page">
+        <div class="container">
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Cart</li>
+                </ol>
+            </nav>
+
+            <h1 class="section-title">Your Cart</h1>
+
+            <div class="cart-container">
+                <!-- Cart Items -->
+                <div class="cart-items-section" id="cartItems">
+                    <!-- Cart items will be loaded dynamically -->
+                </div>
+
+                <!-- Cart Summary -->
+                <div class="cart-summary-section" id="cartSummary">
+                    <!-- Cart summary will be loaded dynamically -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cities Section -->
+    <section class="section bg-light">
+        <div class="container">
+            <h2 class="section-title">Cities with food delivery</h2>
+            <div class="row g-3">
+                <div class="col-6 col-md-4 col-lg-3"><a href="#" class="city-link">Order food online in Bangalore</a></div>
+                <div class="col-6 col-md-4 col-lg-3"><a href="#" class="city-link">Order food online in Gurgaon</a></div>
+                <div class="col-6 col-md-4 col-lg-3"><a href="#" class="city-link">Order food online in Hyderabad</a></div>
+                <div class="col-6 col-md-4 col-lg-3"><a href="#" class="city-link">Order food online in Delhi</a></div>
+                <div class="col-6 col-md-4 col-lg-3"><a href="#" class="city-link">Order food online in Mumbai</a></div>
+                <div class="col-6 col-md-4 col-lg-3"><a href="#" class="city-link">Order food online in Pune</a></div>
+                <div class="col-6 col-md-4 col-lg-3"><a href="#" class="city-link">Order food online in Kolkata</a></div>
+                <div class="col-6 col-md-4 col-lg-3"><a href="#" class="city-link">Order food online in Chennai</a></div>
+                <div class="col-6 col-md-4 col-lg-3"><a href="#" class="city-link">Order food online in Ahmedabad</a></div>
+                <div class="col-6 col-md-4 col-lg-3"><a href="#" class="city-link">Order food online in Chandigarh</a></div>
+                <div class="col-6 col-md-4 col-lg-3"><a href="#" class="city-link">Order food online in Jaipur</a></div>
+                <div class="col-6 col-md-4 col-lg-3"><a href="#" class="city-link show-more">Show More <i class="fas fa-chevron-down"></i></a></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div>
+                    <div class="footer-brand">
+                        <i class="fas fa-utensils"></i> Foodie
+                    </div>
+                    <p class="footer-desc">
+                        Your favorite food delivery app. Order from the best restaurants near you and get delicious food delivered to your doorstep.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="footer-title">Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Press</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Support</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Legal</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Terms & Conditions</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Refund Policy</a></li>
+                        <li><a href="#">Offer Terms</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Foodie. All rights reserved.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Auth Modal -->
+    <div class="modal-overlay" id="authModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Login</h3>
+                <button class="modal-close" onclick="auth.closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Modal content will be loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Success Modal -->
+    <div class="modal-overlay" id="successModal">
+        <div class="modal-content" style="max-width: 400px; text-align: center;">
+            <div class="modal-body">
+                <div style="width: 80px; height: 80px; background: var(--success); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px;">
+                    <i class="fas fa-check" style="font-size: 40px; color: white;"></i>
+                </div>
+                <h3 style="margin-bottom: 12px;">Order Placed!</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 24px;">Your delicious food is being prepared and will be delivered soon.</p>
+                <button class="modal-btn" onclick="window.location.href='profile.html'">Track Order</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            cart.renderCartPage();
+        });
+
+        // Override placeOrder to show success modal
+        cart.placeOrder = function() {
+            if (this.items.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+            
+            if (!auth.isLoggedIn()) {
+                auth.openModal('login');
+                return;
+            }
+            
+            // Show success modal
+            document.getElementById('successModal').classList.add('active');
+            this.clear();
+        };
+    </script>
+</body>
+</html>

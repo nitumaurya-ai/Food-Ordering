@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Restaurants - Order Food Online | Foodie</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">
+                    <i class="fas fa-utensils"></i>
+                    Foodie
+                </a>
+                
+                <div class="location-selector d-none d-lg-flex">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="location-text">Koramangala, Bangalore</span>
+                    <i class="fas fa-chevron-down" style="font-size: 12px;"></i>
+                </div>
+                
+                <div class="search-bar d-none d-lg-flex">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search for restaurants, cuisines..." id="searchInput">
+                </div>
+                
+                <div class="nav-actions">
+                    <div class="cart-icon" onclick="window.location.href='cart.html'">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </div>
+                    <button class="nav-btn login" onclick="auth.openModal('login')">Login</button>
+                    <button class="nav-btn signup" onclick="auth.openModal('signup')">Sign Up</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav class="mobile-nav">
+        <a href="index.html" class="mobile-nav-item">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="restaurants.html" class="mobile-nav-item active">
+            <i class="fas fa-utensils"></i>
+            <span>Food</span>
+        </a>
+        <a href="cart.html" class="mobile-nav-item">
+            <i class="fas fa-shopping-cart"></i>
+            <span>Cart</span>
+        </a>
+        <a href="profile.html" class="mobile-nav-item">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+        </a>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Restaurants</li>
+                </ol>
+            </nav>
+            <h1 class="page-title">Restaurants Near You</h1>
+            <p class="text-muted mb-0">Discover the best food from over 100 restaurants</p>
+        </div>
+    </section>
+
+    <!-- Filters Bar -->
+    <div class="filters-bar">
+        <div class="container">
+            <div class="filters-wrapper">
+                <button class="filter-btn active" data-filter="all">
+                    <i class="fas fa-sliders-h"></i>
+                    Filters
+                </button>
+                <button class="filter-btn" data-filter="veg" onclick="toggleFilter('veg')">
+                    <i class="fas fa-leaf"></i>
+                    Pure Veg
+                </button>
+                <button class="filter-btn" data-filter="rating" onclick="toggleFilter('rating')">
+                    <i class="fas fa-star"></i>
+                    Rating 4.0+
+                </button>
+                <button class="filter-btn" data-filter="time" onclick="toggleFilter('time')">
+                    <i class="fas fa-clock"></i>
+                    Under 30 min
+                </button>
+                <button class="filter-btn" data-filter="price" onclick="toggleFilter('price')">
+                    <i class="fas fa-rupee-sign"></i>
+                    Less than ₹300
+                </button>
+                <div class="sort-dropdown">
+                    <select class="form-select" id="sortSelect" onchange="sortRestaurants(this.value)">
+                        <option value="popularity">Sort by: Popularity</option>
+                        <option value="rating">Rating: High to Low</option>
+                        <option value="time">Delivery Time</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Restaurants Grid -->
+    <section class="section">
+        <div class="container">
+            <div class="restaurants-grid" id="restaurantsGrid">
+                <!-- Restaurants will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Cities Section -->
+    <section class="section bg-light">
+        <div class="container">
+            <h2 class="section-title">Cities with food delivery</h2>
+            <div class="row g-3">
+                <div class="col-6 col-md-4 col-lg-3"><a href="#" class="city-link">Order food online in Bangalore</a></div>
+                <div class="col-6 col-md-4 col-lg-3"><a href="#" class="city-link">Order food online in Gurgaon</a></div>
+                <div class="col-6 col-md-4 col-lg-3"><a href="#" class="city-link">Order food online in Hyderabad</a></div>
+                <div class="col-6 col-md-4 col-lg-3"><a href="#" class="city-link">Order food online in Delhi</a></div>
+                <div class="col-6 col-md-4 col-lg-3"><a href="#" class="city-link">Order food online in Mumbai</a></div>
+                <div class="col-6 col-md-4 col-lg-3"><a href="#" class="city-link">Order food online in Pune</a></div>
+                <div class="col-6 col-md-4 col-lg-3"><a href="#" class="city-link">Order food online in Kolkata</a></div>
+                <div class="col-6 col-md-4 col-lg-3"><a href="#" class="city-link">Order food online in Chennai</a></div>
+                <div class="col-6 col-md-4 col-lg-3"><a href="#" class="city-link">Order food online in Ahmedabad</a></div>
+                <div class="col-6 col-md-4 col-lg-3"><a href="#" class="city-link">Order food online in Chandigarh</a></div>
+                <div class="col-6 col-md-4 col-lg-3"><a href="#" class="city-link">Order food online in Jaipur</a></div>
+                <div class="col-6 col-md-4 col-lg-3"><a href="#" class="city-link show-more">Show More <i class="fas fa-chevron-down"></i></a></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div>
+                    <div class="footer-brand">
+                        <i class="fas fa-utensils"></i> Foodie
+                    </div>
+                    <p class="footer-desc">
+                        Your favorite food delivery app. Order from the best restaurants near you and get delicious food delivered to your doorstep.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="footer-title">Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Press</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Support</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Legal</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Terms & Conditions</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Refund Policy</a></li>
+                        <li><a href="#">Offer Terms</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Foodie. All rights reserved.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Auth Modal -->
+    <div class="modal-overlay" id="authModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Login</h3>
+                <button class="modal-close" onclick="auth.closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Modal content will be loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        // Restaurants page specific JavaScript
+        let currentFilters = {
+            veg: false,
+            rating: false,
+            time: false,
+            price: false
+        };
+        
+        let currentSort = 'popularity';
+        let searchQuery = '';
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Parse URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const category = urlParams.get('category');
+            searchQuery = urlParams.get('search') || '';
+            
+            if (searchQuery) {
+                document.getElementById('searchInput').value = searchQuery;
+            }
+            
+            renderRestaurants();
+        });
+
+        function renderRestaurants() {
+            const container = document.getElementById('restaurantsGrid');
+            if (!container || typeof restaurants === 'undefined') return;
+
+            let filtered = [...restaurants];
+
+            // Apply search filter
+            if (searchQuery) {
+                filtered = filtered.filter(r => 
+                    r.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                    r.cuisine.toLowerCase().includes(searchQuery.toLowerCase())
+                );
+            }
+
+            // Apply filters
+            if (currentFilters.veg) {
+                filtered = filtered.filter(r => r.veg);
+            }
+            if (currentFilters.rating) {
+                filtered = filtered.filter(r => r.rating >= 4.0);
+            }
+            if (currentFilters.time) {
+                filtered = filtered.filter(r => {
+                    const time = parseInt(r.deliveryTime);
+                    return time <= 30;
+                });
+            }
+            if (currentFilters.price) {
+                filtered = filtered.filter(r => r.priceForTwo < 300);
+            }
+
+            // Apply sorting
+            switch (currentSort) {
+                case 'rating':
+                    filtered.sort((a, b) => b.rating - a.rating);
+                    break;
+                case 'time':
+                    filtered.sort((a, b) => parseInt(a.deliveryTime) - parseInt(b.deliveryTime));
+                    break;
+                case 'price-low':
+                    filtered.sort((a, b) => a.priceForTwo - b.priceForTwo);
+                    break;
+                case 'price-high':
+                    filtered.sort((a, b) => b.priceForTwo - a.priceForTwo);
+                    break;
+            }
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-5 col-12">
+                        <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                        <h4>No restaurants found</h4>
+                        <p class="text-muted">Try adjusting your filters or search query</p>
+                        <button class="btn btn-primary mt-3" onclick="resetFilters()">Reset Filters</button>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = filtered.map(rest => `
+                <div class="restaurant-card" onclick="goToRestaurant(${rest.id})">
+                    <div class="restaurant-img">
+                        <img src="${rest.image}" alt="${rest.name}" loading="lazy">
+                        ${rest.offer ? `<span class="restaurant-badge">${rest.offer}</span>` : ''}
+                        <div class="restaurant-rating">
+                            <span>${rest.rating}</span>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <div class="restaurant-info">
+                        <h3 class="restaurant-name">${rest.name}</h3>
+                        <p class="restaurant-cuisine">${rest.cuisine}</p>
+                        <div class="restaurant-meta">
+                            <span><i class="far fa-clock"></i> ${rest.deliveryTime}</span>
+                            <span><i class="fas fa-rupee-sign"></i> ${rest.priceForTwo} for two</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleFilter(filterType) {
+            currentFilters[filterType] = !currentFilters[filterType];
+            
+            // Update button state
+            const btn = document.querySelector(`[data-filter="${filterType}"]`);
+            if (btn) {
+                btn.classList.toggle('active', currentFilters[filterType]);
+            }
+            
+            renderRestaurants();
+        }
+
+        function sortRestaurants(sortType) {
+            currentSort = sortType;
+            renderRestaurants();
+        }
+
+        function resetFilters() {
+            currentFilters = {
+                veg: false,
+                rating: false,
+                time: false,
+                price: false
+            };
+            searchQuery = '';
+            currentSort = 'popularity';
+            
+            document.getElementById('searchInput').value = '';
+            document.getElementById('sortSelect').value = 'popularity';
+            
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                if (btn.dataset.filter !== 'all') {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            renderRestaurants();
+        }
+
+        function goToRestaurant(id) {
+            window.location.href = `restaurant-detail.html?id=${id}`;
+        }
+
+        // Search input handler
+        document.getElementById('searchInput')?.addEventListener('input', debounce(function(e) {
+            searchQuery = e.target.value;
+            renderRestaurants();
+        }, 300));
+
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+    </script>
+</body>
+</html>

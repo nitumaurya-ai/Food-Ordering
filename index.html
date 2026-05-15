@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Foodie - Order Food Online | Food Delivery App</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">
+                    <i class="fas fa-utensils"></i>
+                    Foodie
+                </a>
+                
+                <div class="location-selector">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="location-text">Koramangala, Bangalore</span>
+                    <i class="fas fa-chevron-down" style="font-size: 12px;"></i>
+                </div>
+                
+                <div class="search-bar d-none d-lg-flex">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search for restaurants, cuisines..." onkeypress="if(event.key==='Enter') handleSearch(this.value)">
+                </div>
+                
+                <div class="nav-actions">
+                    <div class="cart-icon" onclick="window.location.href='cart.html'">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </div>
+                    <button class="nav-btn login" onclick="auth.openModal('login')">Login</button>
+                    <button class="nav-btn signup" onclick="auth.openModal('signup')">Sign Up</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav class="mobile-nav">
+        <a href="index.html" class="mobile-nav-item active">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="restaurants.html" class="mobile-nav-item">
+            <i class="fas fa-utensils"></i>
+            <span>Food</span>
+        </a>
+        <a href="cart.html" class="mobile-nav-item">
+            <i class="fas fa-shopping-cart"></i>
+            <span>Cart</span>
+        </a>
+        <a href="profile.html" class="mobile-nav-item">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+        </a>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-bg">
+            <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1920" alt="Food Background">
+        </div>
+        <div class="hero-content">
+            <h1 class="hero-title">Craving Something Delicious?</h1>
+            <p class="hero-subtitle">Order your favorite food from the best restaurants near you</p>
+            <div class="hero-search">
+                <div class="hero-search-location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Koramangala, Bangalore</span>
+                    <i class="fas fa-chevron-down" style="margin-left: auto;"></i>
+                </div>
+                <div class="hero-search-input">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search for restaurants, cuisines or dishes..." onkeypress="if(event.key==='Enter') handleSearch(this.value)">
+                </div>
+                <button class="hero-search-btn" onclick="handleSearch(document.querySelector('.hero-search-input input').value)">
+                    Find Food
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">What's on your mind?</h2>
+            <div class="categories-scroll" id="categoriesContainer">
+                <!-- Categories will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Restaurants -->
+    <section class="section bg-light">
+        <div class="container">
+            <h2 class="section-title">Featured Restaurants</h2>
+            <div class="swiper featured-swiper">
+                <div class="swiper-wrapper" id="featuredRestaurants">
+                    <!-- Featured restaurants will be loaded dynamically -->
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Offers Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Best Offers for You</h2>
+            <div class="row" id="offersContainer">
+                <!-- Offers will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Top Rated Section -->
+    <section class="section bg-light">
+        <div class="container">
+            <h2 class="section-title">Top Rated Near You</h2>
+            <div class="row" id="topRatedContainer">
+                <!-- Top rated restaurants will be loaded dynamically -->
+            </div>
+            <div class="text-center mt-4">
+                <a href="restaurants.html" class="btn btn-outline-primary btn-lg">
+                    View All Restaurants
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Google Maps Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Find Restaurants Near You</h2>
+            <div class="row">
+                <div class="col-12">
+                    <div style="border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-md);">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.555678163264!2d77.6101163148217!3d12.9354509908796!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae144ed6d5f8f7%3A0x151a0d5b0c5b6b1a!2sKoramangala%2C%20Bengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1645000000000!5m2!1sen!2sin"
+                            width="100%" 
+                            height="450" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                    <div class="text-center mt-4">
+                        <p class="text-muted">Explore restaurants in your area and discover new favorites</p>
+                        <a href="restaurants.html" class="btn btn-primary">View All Restaurants</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- App Download Section -->
+    <section class="app-section">
+        <div class="container">
+            <div class="app-content">
+                <div class="app-text">
+                    <h2>Get the Foodie App</h2>
+                    <p>Order food on the go with our mobile app. Get exclusive app-only offers and track your orders in real-time.</p>
+                    <div class="app-buttons">
+                        <a href="#" class="app-btn">
+                            <i class="fab fa-apple"></i>
+                            <div class="app-btn-text">
+                                <small>Download on the</small>
+                                <span>App Store</span>
+                            </div>
+                        </a>
+                        <a href="#" class="app-btn">
+                            <i class="fab fa-google-play"></i>
+                            <div class="app-btn-text">
+                                <small>Get it on</small>
+                                <span>Google Play</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="app-mockup d-none d-lg-block">
+                    <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=400" alt="Mobile App">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cities Section -->
+    <section class="section bg-light">
+        <div class="container">
+            <!-- Cities with food delivery -->
+            <h2 class="section-title">Cities with food delivery</h2>
+            <div class="row g-3" id="foodCities">
+                <div class="col-6 col-md-4 col-lg-3">
+                    <a href="#" class="city-link">Order food online in Bangalore</a>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <a href="#" class="city-link">Order food online in Gurgaon</a>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <a href="#" class="city-link">Order food online in Hyderabad</a>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <a href="#" class="city-link">Order food online in Delhi</a>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <a href="#" class="city-link">Order food online in Mumbai</a>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <a href="#" class="city-link">Order food online in Pune</a>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <a href="#" class="city-link">Order food online in Kolkata</a>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <a href="#" class="city-link">Order food online in Chennai</a>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <a href="#" class="city-link">Order food online in Ahmedabad</a>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <a href="#" class="city-link">Order food online in Chandigarh</a>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <a href="#" class="city-link">Order food online in Jaipur</a>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <a href="#" class="city-link show-more">Show More <i class="fas fa-chevron-down"></i></a>
+                </div>
+            </div>
+
+            <!-- Cities with grocery delivery -->
+            <h2 class="section-title mt-5">Cities with grocery delivery</h2>
+            <div class="row g-3" id="groceryCities">
+                <div class="col-6 col-md-4 col-lg-3">
+                    <a href="#" class="city-link">Order grocery delivery in Bangalore</a>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <a href="#" class="city-link">Order grocery delivery in Gurgaon</a>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <a href="#" class="city-link">Order grocery delivery in Hyderabad</a>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <a href="#" class="city-link">Order grocery delivery in Delhi</a>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <a href="#" class="city-link">Order grocery delivery in Mumbai</a>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <a href="#" class="city-link">Order grocery delivery in Pune</a>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <a href="#" class="city-link">Order grocery delivery in Kolkata</a>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <a href="#" class="city-link">Order grocery delivery in Chennai</a>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <a href="#" class="city-link">Order grocery delivery in Ahmedabad</a>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <a href="#" class="city-link">Order grocery delivery in Chandigarh</a>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <a href="#" class="city-link">Order grocery delivery in Jaipur</a>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <a href="#" class="city-link show-more">Show More <i class="fas fa-chevron-down"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div>
+                    <div class="footer-brand">
+                        <i class="fas fa-utensils"></i> Foodie
+                    </div>
+                    <p class="footer-desc">
+                        Your favorite food delivery app. Order from the best restaurants near you and get delicious food delivered to your doorstep.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="footer-title">Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Press</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Support</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Legal</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Terms & Conditions</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Refund Policy</a></li>
+                        <li><a href="#">Offer Terms</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Foodie. All rights reserved. Made by nitu_maurya_official</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Auth Modal -->
+    <div class="modal-overlay" id="authModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Login</h3>
+                <button class="modal-close" onclick="auth.closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Modal content will be loaded dynamically -->
+            </div>
+        </div>
+    </div>
+ 
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
+
